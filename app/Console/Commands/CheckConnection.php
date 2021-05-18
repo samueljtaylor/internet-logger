@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\ConnectionTest;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CheckConnection extends Command
@@ -46,7 +47,7 @@ class CheckConnection extends Command
             'output' => implode(PHP_EOL, $output),
             'return_code' => $code,
             'up' => $code === 0,
-            'completed' => true,
+            'completed_at' => Carbon::now(),
         ]);
         return 0;
     }

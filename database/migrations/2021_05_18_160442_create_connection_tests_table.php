@@ -15,10 +15,10 @@ class CreateConnectionTestsTable extends Migration
     {
         Schema::create('connection_tests', function (Blueprint $table) {
             $table->id();
-            $table->boolean('completed')->default(false);
             $table->longText('output')->nullable();
             $table->integer('return_code')->nullable();
             $table->boolean('up')->nullable();
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
     }
