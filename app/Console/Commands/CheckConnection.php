@@ -40,7 +40,7 @@ class CheckConnection extends Command
     {
         exec('mtr -rwc 1 8.8.8.8', $output, $code);
         ConnectionTest::create([
-            'output' => $output,
+            'output' => implode(PHP_EOL, $output),
             'return_code' => $code,
             'up' => $code === 0,
         ]);
