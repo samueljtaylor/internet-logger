@@ -38,11 +38,15 @@ class CheckConnection extends Command
      */
     public function handle()
     {
+        $connection = ConnectionTest::create();
+
         exec('mtr -rwc 1 8.8.8.8', $output, $code);
-        ConnectionTest::create([
+
+        $connection->update([
             'output' => implode(PHP_EOL, $output),
             'return_code' => $code,
             'up' => $code === 0,
+            'completed' => true,
         ]);
         return 0;
     }
