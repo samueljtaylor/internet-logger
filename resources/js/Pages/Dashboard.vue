@@ -11,16 +11,18 @@
                 <div class="flex flex-col md:flex-row md:space-x-20">
                     <div class="widget bg-gray-700 text-white">
                         <div class="text-4xl">{{ tests.length }}</div>
-                        <div class="text-lg">Total Tests</div>
+                        <div class="text-xl">Total Tests</div>
+                        <div class="text-sm text-gray-300 mt-5">Last Updated: {{ timeSinceLastTest }}</div>
                     </div>
 
                     <div class="widget bg-red-500 text-white">
                         <div class="text-4xl">{{ fails.length }}</div>
                         <div class="text-lg">Failed Tests</div>
+                        <div class="text-sm text-gray-100 mt-5">Last Failure: {{ timeSinceLastFailure }}</div>
                     </div>
                 </div>
 
-                <div class="w-full mt-32 bg-white shadow-lg">
+                <div class="w-full mt-20 bg-white shadow-lg">
                     <table class="table w-full border-collapse">
                         <tr>
                             <th>ID</th>
@@ -82,6 +84,17 @@
                 return props.tests.filter(test => test.up === 0)
             });
 
+            let timeSinceLastTest = computed(() => {
+                return moment(props.tests[0].created_at).fromNow();
+            });
+
+            let timeSinceLastFailure = computed(() => {
+                if(fails.value > 0) {
+                    return moment(fails.value[0].created_at).fromNow();
+                }
+                return 'No failures today'
+            })
+
             let showDetails = ref(false);
 
             let selectedTest = ref({});
@@ -103,6 +116,8 @@
                 fails,
                 showDetails,
                 selectedTest,
+                timeSinceLastTest,
+                timeSinceLastFailure,
                 formatTime,
                 formatDate,
                 showDetail
@@ -115,10 +130,13 @@
     .widget {
         @apply
         shadow-lg
-        p-10
+        pt-10
+        px-10
+        pb-3
         flex-1
         flex
         flex-col
+        text-center
     }
 
     td,th {
