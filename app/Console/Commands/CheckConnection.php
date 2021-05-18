@@ -43,7 +43,7 @@ class CheckConnection extends Command
         $connection = ConnectionTest::create();
 
         if(Str::contains(strtolower(php_uname()), 'ubuntu')) {
-            exec('mtr -rwc 1 8.8.8.8', $output, $code);
+            exec('mtr -rc 1 8.8.8.8', $output, $code);
         } else {
             exec('ping -c 1 8.8.8.8', $output, $code);
         }

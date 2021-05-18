@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         return Inertia::render('Dashboard', [
-            'tests' => ConnectionTest::today()->get()
+            'tests' => ConnectionTest::today()->orderBy('created_at', 'desc')->get()
         ]);
     }
 }

@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        <dialog-modal :show="showDetails" @close="showDetails = false">
+        <dialog-modal :show="showDetails" @close="showDetails = false" max-width="7xl">
             <template #title>Test Details</template>
 
             <template #content>
