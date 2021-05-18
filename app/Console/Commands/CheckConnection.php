@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\ConnectionTest;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class CheckConnection extends Command
 {
@@ -41,7 +42,11 @@ class CheckConnection extends Command
     {
         $connection = ConnectionTest::create();
 
-        exec('mtr -rwc 1 8.8.8.8', $output, $code);
+        if(Str::contains(strtolower(php_uname()), 'ubuntu')) {
+            exec('mtr -rwc 1 8.8.8.8', $output, $code);
+        } else {
+            exec('ping -c 1 8.8.8.8', $output, $code);
+        }
 
         $connection->update([
             'output' => implode(PHP_EOL, $output),

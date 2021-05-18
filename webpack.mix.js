@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-tailwind')
 
 /*
  |--------------------------------------------------------------------------
@@ -16,8 +17,9 @@ mix.js('resources/js/app.js', 'public/js').vue()
         require('postcss-import'),
         require('tailwindcss'),
     ])
+    .tailwind()
     .webpackConfig(require('./webpack.config'));
 
-if (mix.inProduction()) {
+// if (mix.inProduction()) {
     mix.version();
-}
+// }
