@@ -49,9 +49,7 @@
         },
 
         setup(props) {
-            let fails = computed(() => {
-                return props.tests.filter(test => test.up === 0)
-            });
+            let fails = props.tests.filter(test => test.up === 0);
 
             let timeSinceLastTest = computed(() => {
                 if(props.tests.length > 0) {
