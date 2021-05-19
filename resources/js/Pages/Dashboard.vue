@@ -22,42 +22,9 @@
                     </div>
                 </div>
 
-                <div class="w-full mt-20 bg-white shadow-lg">
-                    <table class="table w-full border-collapse">
-                        <tr>
-                            <th>ID</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Status</th>
-                            <th>Details</th>
-                        </tr>
-                        <tr v-for="(test, index) in tests" :key="index" :class="index % 2 !== 0 ? 'bg-gray-50' : ''">
-                            <td>{{ test.id }}</td>
-                            <td>{{ formatDate(test.created_at) }}</td>
-                            <td>{{ formatTime(test.created_at) }}</td>
-                            <td class="">
-                                <div class="bg-red-500 text-white tracking-wider text-center rounded-lg w-1/2 px-3 mx-auto" v-if="!test.up">Fail</div>
-                                <div class="bg-green-500 text-white tracking-wider text-center rounded-lg w-1/2 px-3 mx-auto" v-if="test.up">Success</div>
-                            </td>
-                            <td>
-                                <button type="button" class="button" @click="showDetail(test)">Details</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <list-table class="mt-20" :tests="tests"/>
             </div>
         </div>
-        <dialog-modal :show="showDetails" @close="showDetails = false" max-width="7xl">
-            <template #title>Test Details</template>
-
-            <template #content>
-                <pre>{{ selectedTest.output }}</pre>
-            </template>
-
-            <template #footer>
-                <button type="button" class="button" @click="showDetails = false">Close</button>
-            </template>
-        </dialog-modal>
     </app-layout>
 </template>
 
@@ -67,6 +34,7 @@
     import {computed, ref} from "vue";
     import moment from 'moment';
     import DialogModal from "@/Jetstream/DialogModal";
+    import ListTable from "@/Components/ListTable";
 
     export default {
         props: {
@@ -74,6 +42,7 @@
         },
 
         components: {
+            ListTable,
             DialogModal,
             AppLayout,
             Welcome,
@@ -85,7 +54,10 @@
             });
 
             let timeSinceLastTest = computed(() => {
-                return moment(props.tests[0].created_at).fromNow();
+                if(props.tests.length > 0) {
+                    return moment(props.tests[0].created_at).fromNow();
+                }
+                return 'No tests performed today'
             });
 
             let timeSinceLastFailure = computed(() => {
@@ -95,32 +67,10 @@
                 return 'No failures today'
             })
 
-            let showDetails = ref(false);
-
-            let selectedTest = ref({});
-
-            function formatTime(date) {
-                return moment(date).format('h:mm a')
-            }
-
-            function formatDate(date) {
-                return moment(date).format('MMMM Do YYYY')
-            }
-
-            function showDetail(test) {
-                selectedTest.value = test;
-                showDetails.value = true;
-            }
-
             return {
                 fails,
-                showDetails,
-                selectedTest,
                 timeSinceLastTest,
                 timeSinceLastFailure,
-                formatTime,
-                formatDate,
-                showDetail
             }
         },
     }
@@ -137,37 +87,5 @@
         flex
         flex-col
         text-center
-    }
-
-    td,th {
-        @apply
-        p-5
-        border
-        border-gray-300
-        text-center
-    }
-
-    .button {
-        @apply
-        inline-flex
-        items-center
-        px-4
-        py-2
-        bg-gray-800
-        border
-        border-transparent
-        rounded-md
-        font-semibold
-        text-xs
-        text-white
-        uppercase
-        tracking-widest
-        hover:bg-gray-700
-        focus:outline-none
-        focus:border-gray-900
-        focus:ring
-        focus:ring-gray-300
-        disabled:opacity-25
-        transition
     }
 </style>
