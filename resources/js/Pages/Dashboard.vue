@@ -18,7 +18,7 @@
                     <div class="widget bg-red-500 text-white">
                         <div class="text-4xl">{{ fails.length }}</div>
                         <div class="text-lg">Failed Tests</div>
-                        <div class="text-sm text-gray-100 mt-5">Last Failure: {{ timeSinceLastFailure }}</div>
+                        <div class="text-sm text-gray-100 mt-5">Last Failure: {{ lastFailure }}</div>
                     </div>
                 </div>
 
@@ -49,18 +49,20 @@
         },
 
         setup(props) {
-            let fails = props.tests.filter(test => test.up === 0);
+            let fails = computed(() => {
+                return props.tests.filter(test => test.up === 0)
+            });
 
             let timeSinceLastTest = computed(() => {
                 if(props.tests.length > 0) {
                     return moment(props.tests[0].created_at).fromNow();
                 }
-                return 'No tests performed today'
+                return 'No tests today'
             });
 
-            let timeSinceLastFailure = computed(() => {
-                if(fails.value > 0) {
-                    return moment(fails.value[0].created_at).fromNow();
+            let lastFailure = computed(() => {
+                if(fails.value.length > 0) {
+                    return moment(fails.value[0].created_at).format('h:mm a');
                 }
                 return 'No failures today'
             })
@@ -68,7 +70,7 @@
             return {
                 fails,
                 timeSinceLastTest,
-                timeSinceLastFailure,
+                lastFailure,
             }
         },
     }
