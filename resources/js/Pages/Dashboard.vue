@@ -10,13 +10,13 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col">
                 <div class="flex flex-col md:flex-row md:space-x-20">
                     <div class="widget bg-gray-700 text-white">
-                        <div class="text-4xl">{{ tests.data.length }}</div>
+                        <div class="text-4xl">{{ tests.total }}</div>
                         <div class="text-xl">Total Tests</div>
                         <div class="text-sm text-gray-300 mt-5">Last Updated: {{ timeSinceLastTest }}</div>
                     </div>
 
                     <div class="widget bg-red-500 text-white">
-                        <div class="text-4xl">{{ failedTests.data.length }}</div>
+                        <div class="text-4xl">{{ failedTests.total }}</div>
                         <div class="text-lg">Failed Tests</div>
                         <div class="text-sm text-gray-100 mt-5">Last Failure: {{ lastFailure }}</div>
                     </div>
