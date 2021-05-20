@@ -71,7 +71,7 @@
             });
 
             let uptimePercentage = computed(() => {
-                return ((props.tests.total-props.failedTests.total)/props.tests.total)*100;
+                return Math.round(((props.tests.total-props.failedTests.total)/props.tests.total)*1000)/10;
             });
 
             return {
