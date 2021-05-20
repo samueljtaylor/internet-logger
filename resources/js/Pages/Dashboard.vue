@@ -15,6 +15,11 @@
                         <div class="text-sm text-gray-300 mt-5">Last Updated: {{ timeSinceLastTest }}</div>
                     </div>
 
+                    <div class="widget bg-gray-700 text-white">
+                        <div class="text-4xl">{{ uptimePercentage }}%</div>
+                        <div class="text-xl">Uptime Percentage</div>
+                    </div>
+
                     <div class="widget bg-red-500 text-white">
                         <div class="text-4xl">{{ failedTests.total }}</div>
                         <div class="text-lg">Failed Tests</div>
@@ -63,11 +68,16 @@
                     return moment(props.failedTests.data[0].created_at).format('h:mm a');
                 }
                 return 'No failures today'
-            })
+            });
+
+            let uptimePercentage = computed(() => {
+                return ((props.tests.total-props.failedTests.total)/props.tests.total)*100;
+            });
 
             return {
                 timeSinceLastTest,
                 lastFailure,
+                uptimePercentage,
             }
         },
     }
