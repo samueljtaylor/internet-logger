@@ -1,7 +1,7 @@
 <template>
     <div class="w-full bg-white shadow-lg">
         <div class="p-5 text-center text-gray-400" v-if="!items.length">
-            No Tests
+            No Items
         </div>
         <table class="table w-full border-collapse" v-if="items.length">
             <tr>
@@ -25,12 +25,12 @@
             </tr>
         </table>
 
-        <div class="flex flex-row w-full justify-center px-5" v-if="paginationLinks.length">
+        <div class="flex flex-row w-full justify-center px-5" v-if="paginationLinks.length && items.length">
             <inertia-link class="p-4" v-for="link in paginationLinks" :href="link.url || '#'" :active="link.active" v-html="link.label"></inertia-link>
         </div>
 
         <dialog-modal :show="showModal" @close="closeModal" max-width="7xl">
-            <template #title>Test Details</template>
+            <template #title>Item Details</template>
 
             <template #content>
                 <pre>{{ selectedItem.output }}</pre>

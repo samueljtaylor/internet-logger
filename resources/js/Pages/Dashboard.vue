@@ -11,7 +11,7 @@
                 <div class="flex flex-col md:flex-row md:space-x-20">
                     <div class="widget bg-gray-700 text-white">
                         <div class="text-4xl">{{ tests.total }}</div>
-                        <div class="text-xl">Total Tests</div>
+                        <div class="text-xl">Tests Today</div>
                         <div class="text-sm text-gray-300 mt-5">Last Updated: {{ timeSinceLastTest }}</div>
                     </div>
 
@@ -22,7 +22,8 @@
                     </div>
                 </div>
 
-                <list-table class="mt-20" :items="tests.data" :pagination-links="tests.links"/>
+                <div class="text-2xl mt-20 mb-5">Today's Failed Tests</div>
+                <list-table :items="failedTests.data" :pagination-links="tests.links"/>
             </div>
         </div>
     </app-layout>
