@@ -23,4 +23,14 @@ class ConnectionTest extends Model
     {
         return $query->whereDate('created_at', Carbon::today());
     }
+
+    public function scopeFailed($query)
+    {
+        return $query->where('up', false);
+    }
+
+    public function scopeDesc($query)
+    {
+        return $query->orderBy('created_at', 'desc');
+    }
 }

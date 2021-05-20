@@ -1,9 +1,9 @@
 <template>
     <div class="w-full bg-white shadow-lg">
-        <div class="p-5 text-center text-gray-400" v-if="!tests.length">
+        <div class="p-5 text-center text-gray-400" v-if="!items.length">
             No Tests
         </div>
-        <table class="table w-full border-collapse" v-if="tests.length">
+        <table class="table w-full border-collapse" v-if="items.length">
             <tr>
                 <th>ID</th>
                 <th>Date</th>
@@ -11,24 +11,29 @@
                 <th>Status</th>
                 <th>Details</th>
             </tr>
-            <tr v-for="(test, index) in tests" :key="index" :class="index % 2 !== 0 ? 'bg-gray-50' : ''">
-                <td>{{ test.id }}</td>
-                <td>{{ $helpers.formatDate(test.created_at) }}</td>
-                <td>{{ $helpers.formatTime(test.created_at) }}</td>
+            <tr v-for="(item, index) in items" :key="index" :class="index % 2 !== 0 ? 'bg-gray-50' : ''">
+                <td>{{ item.id }}</td>
+                <td>{{ $helpers.formatDate(item.created_at) }}</td>
+                <td>{{ $helpers.formatTime(item.created_at) }}</td>
                 <td class="">
-                    <div class="bg-red-500 text-white tracking-wider text-center rounded-lg w-1/2 px-3 mx-auto" v-if="!test.up">Fail</div>
-                    <div class="bg-green-500 text-white tracking-wider text-center rounded-lg w-1/2 px-3 mx-auto" v-if="test.up">Success</div>
+                    <div class="bg-red-500 text-white tracking-wider text-center rounded-lg w-1/2 px-3 mx-auto" v-if="!item.up">Fail</div>
+                    <div class="bg-green-500 text-white tracking-wider text-center rounded-lg w-1/2 px-3 mx-auto" v-if="item.up">Success</div>
                 </td>
                 <td>
-                    <button type="button" class="button" @click="openModal(test)">Details</button>
+                    <button type="button" class="button" @click="openModal(item)">Details</button>
                 </td>
             </tr>
         </table>
+
+        <div class="flex flex-row w-full justify-center px-5" v-if="paginationLinks.length">
+            <inertia-link class="p-4" v-for="link in paginationLinks" :href="link.url || '#'" :active="link.active" v-html="link.label"></inertia-link>
+        </div>
+
         <dialog-modal :show="showModal" @close="closeModal" max-width="7xl">
             <template #title>Test Details</template>
 
             <template #content>
-                <pre>{{ selectedTest.output }}</pre>
+                <pre>{{ selectedItem.output }}</pre>
             </template>
 
             <template #footer>
@@ -44,26 +49,27 @@ import {ref} from "vue";
 export default {
     components: {DialogModal},
     props: {
-        tests: Array,
+        items: Array,
+        paginationLinks: {type: Array, default: []},
     },
 
     setup(props) {
         let showModal = ref(false);
-        let selectedTest = ref(null);
+        let selectedItem = ref(null);
 
-        function openModal(test) {
-            selectedTest.value = test;
+        function openModal(item) {
+            selectedItem.value = item;
             showModal.value = true;
         }
 
         function closeModal() {
-            selectedTest.value = null;
+            selectedItem.value = null;
             showModal.value = false;
         }
 
         return {
             showModal,
-            selectedTest,
+            selectedItem,
             openModal,
             closeModal,
         }

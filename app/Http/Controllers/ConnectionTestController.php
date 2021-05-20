@@ -12,7 +12,7 @@ class ConnectionTestController extends Controller
     public function index()
     {
         return Inertia::render('ConnectionTest/AllTests', [
-            'tests' => ConnectionTest::orderBy('created_at', 'desc')->get(),
+            'tests' => ConnectionTest::desc()->paginate(),
         ]);
     }
 }

@@ -8,7 +8,7 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col">
-                <list-table :tests="tests"/>
+                <list-table :items="tests.data" :pagination-links="tests.links"/>
             </div>
         </div>
     </app-layout>
@@ -20,7 +20,7 @@ import ListTable from "@/Components/ListTable";
 export default {
     components: {ListTable, AppLayout},
     props: {
-        tests: Array,
+        tests: Object,
     },
 
     setup(props) {

@@ -12,7 +12,8 @@ class DashboardController extends Controller
     public function index()
     {
         return Inertia::render('Dashboard', [
-            'tests' => ConnectionTest::today()->orderBy('created_at', 'desc')->get()
+            'tests' => ConnectionTest::today()->desc()->paginate(),
+            'failedTests' => ConnectionTest::today()->failed()->desc()->paginate(),
         ]);
     }
 }

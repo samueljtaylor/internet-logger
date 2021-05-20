@@ -10,19 +10,19 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col">
                 <div class="flex flex-col md:flex-row md:space-x-20">
                     <div class="widget bg-gray-700 text-white">
-                        <div class="text-4xl">{{ tests.length }}</div>
+                        <div class="text-4xl">{{ tests.data.length }}</div>
                         <div class="text-xl">Total Tests</div>
                         <div class="text-sm text-gray-300 mt-5">Last Updated: {{ timeSinceLastTest }}</div>
                     </div>
 
                     <div class="widget bg-red-500 text-white">
-                        <div class="text-4xl">{{ fails.length }}</div>
+                        <div class="text-4xl">{{ failedTests.data.length }}</div>
                         <div class="text-lg">Failed Tests</div>
                         <div class="text-sm text-gray-100 mt-5">Last Failure: {{ lastFailure }}</div>
                     </div>
                 </div>
 
-                <list-table class="mt-20" :tests="tests"/>
+                <list-table class="mt-20" :items="tests.data" :pagination-links="tests.links"/>
             </div>
         </div>
     </app-layout>
@@ -38,7 +38,8 @@
 
     export default {
         props: {
-            tests: Array,
+            tests: Object,
+            failedTests: Object,
         },
 
         components: {
@@ -49,26 +50,21 @@
         },
 
         setup(props) {
-            let fails = computed(() => {
-                return props.tests.filter(test => test.up === 0)
-            });
-
             let timeSinceLastTest = computed(() => {
-                if(props.tests.length > 0) {
-                    return moment(props.tests[0].created_at).fromNow();
+                if(props.tests.data.length > 0) {
+                    return moment(props.tests.data[0].created_at).fromNow();
                 }
                 return 'No tests today'
             });
 
             let lastFailure = computed(() => {
-                if(fails.value.length > 0) {
-                    return moment(fails.value[0].created_at).format('h:mm a');
+                if(props.failedTests.data.length > 0) {
+                    return moment(props.failedTests.data[0].created_at).format('h:mm a');
                 }
                 return 'No failures today'
             })
 
             return {
-                fails,
                 timeSinceLastTest,
                 lastFailure,
             }
