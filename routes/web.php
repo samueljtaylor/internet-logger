@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ConnectionTestController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MetricsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +24,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/metrics', [MetricsController::class, 'index'])->name('metrics');
 
     Route::resource('connection-test', ConnectionTestController::class)->only([ 'index' ]);
 });

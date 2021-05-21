@@ -20,6 +20,9 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
+                                <jet-nav-link :href="route('metrics')" :active="route().current('metrics')">
+                                    Metrics
+                                </jet-nav-link>
                                 <jet-nav-link :href="route('connection-test.index')" :active="route().current('connection-test.index')">
                                     All Tests
                                 </jet-nav-link>
@@ -148,6 +151,10 @@
                     <div class="pt-2 pb-3 space-y-1">
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </jet-responsive-nav-link>
+
+                        <jet-responsive-nav-link :href="route('metrics')" :active="route().current('metrics')">
+                            Metrics
                         </jet-responsive-nav-link>
 
                         <jet-responsive-nav-link :href="route('connection-test.index')" :active="route().current('connection=test.index')">

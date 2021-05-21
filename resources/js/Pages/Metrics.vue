@@ -1,0 +1,104 @@
+<template>
+    <app-layout>
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Metrics
+            </h2>
+        </template>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col">
+                <div class="flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-20">
+                    <div class="widget bg-gray-700 text-white">
+                        <div class="text-4xl">{{ tests.total }}</div>
+                        <div class="text-xl">Total Tests</div>
+                        <div class="text-sm text-gray-300 mt-5">Last Test: {{ lastTest }}</div>
+                    </div>
+
+                    <div class="widget bg-gray-700 text-white">
+                        <div class="text-4xl">{{ uptimePercentage }}%</div>
+                        <div class="text-xl">Uptime Percentage</div>
+                        <div class="text-sm text-gray-300 mt-5">Last Updated: {{ timeSinceLastTest }}</div>
+                    </div>
+
+                    <div class="widget bg-red-500 text-white">
+                        <div class="text-4xl">{{ failedTests.total }}</div>
+                        <div class="text-lg">Failed Tests</div>
+                        <div class="text-sm text-gray-100 mt-5">Last Failure: {{ lastFailure }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-layout>
+</template>
+
+<script>
+import AppLayout from '@/Layouts/AppLayout'
+import Welcome from '@/Jetstream/Welcome'
+import {computed, ref} from "vue";
+import moment from 'moment';
+import DialogModal from "@/Jetstream/DialogModal";
+import ListTable from "@/Components/ListTable";
+
+export default {
+    props: {
+        tests: Object,
+        failedTests: Object,
+    },
+
+    components: {
+        ListTable,
+        DialogModal,
+        AppLayout,
+        Welcome,
+    },
+
+    setup(props) {
+        let timeSinceLastTest = computed(() => {
+            if(props.tests.total > 0) {
+                return moment(props.tests.data[0].created_at).fromNow();
+            }
+            return 'No tests'
+        });
+
+        let lastTest = computed(() => {
+            if(props.tests.total > 0) {
+                return moment(props.tests.data[0].created_at).format('h:mm a');
+            }
+            return 'No tests'
+        });
+
+        let lastFailure = computed(() => {
+            if(props.failedTests.total > 0) {
+                return moment(props.failedTests.data[0].created_at).format('h:mm a');
+            }
+            return 'No failures'
+        });
+
+        let uptimePercentage = computed(() => {
+            return Math.round(((props.tests.total-props.failedTests.total)/props.tests.total)*1000)/10;
+        });
+
+        return {
+            timeSinceLastTest,
+            lastTest,
+            lastFailure,
+            uptimePercentage,
+        }
+    },
+}
+</script>
+
+<style scoped>
+.widget {
+    @apply
+    shadow-lg
+    pt-10
+    px-10
+    pb-3
+    flex-1
+    flex
+    flex-col
+    text-center
+}
+</style>
