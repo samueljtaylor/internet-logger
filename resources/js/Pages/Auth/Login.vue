@@ -49,9 +49,11 @@
     import JetCheckbox from '@/Jetstream/Checkbox'
     import JetLabel from '@/Jetstream/Label'
     import JetValidationErrors from '@/Jetstream/ValidationErrors'
+    import TaylorNetworkLogo from "@/Components/TaylorNetworkLogo";
 
     export default {
         components: {
+            TaylorNetworkLogo,
             JetAuthenticationCard,
             JetAuthenticationCardLogo,
             JetButton,

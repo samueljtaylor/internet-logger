@@ -7,17 +7,18 @@
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col">
-                <div class="flex flex-col md:flex-row md:space-x-20">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col">
+                <div class="flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-20">
                     <div class="widget bg-gray-700 text-white">
                         <div class="text-4xl">{{ tests.total }}</div>
                         <div class="text-xl">Tests Today</div>
-                        <div class="text-sm text-gray-300 mt-5">Last Updated: {{ timeSinceLastTest }}</div>
+                        <div class="text-sm text-gray-300 mt-5">Last Test: {{ lastTest }}</div>
                     </div>
 
                     <div class="widget bg-gray-700 text-white">
                         <div class="text-4xl">{{ uptimePercentage }}%</div>
                         <div class="text-xl">Uptime Percentage</div>
+                        <div class="text-sm text-gray-300 mt-5">Last Updated: {{ timeSinceLastTest }}</div>
                     </div>
 
                     <div class="widget bg-red-500 text-white">
@@ -28,7 +29,7 @@
                 </div>
 
                 <div class="text-2xl mt-20 mb-5">Today's Failed Tests</div>
-                <list-table :items="failedTests.data" :pagination-links="tests.links"/>
+                <list-table :items="failedTests.data" :pagination-links="failedTests.links"/>
             </div>
         </div>
     </app-layout>
@@ -63,6 +64,13 @@
                 return 'No tests today'
             });
 
+            let lastTest = computed(() => {
+                if(props.tests.data.length > 0) {
+                    return moment(props.tests.data[0].created_at).format('h:mm a');
+                }
+                return 'No tests today'
+            });
+
             let lastFailure = computed(() => {
                 if(props.failedTests.data.length > 0) {
                     return moment(props.failedTests.data[0].created_at).format('h:mm a');
@@ -76,6 +84,7 @@
 
             return {
                 timeSinceLastTest,
+                lastTest,
                 lastFailure,
                 uptimePercentage,
             }

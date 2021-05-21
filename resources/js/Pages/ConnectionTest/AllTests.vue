@@ -2,7 +2,7 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                All Tests
+                {{ title }}
             </h2>
         </template>
 
@@ -21,6 +21,7 @@ export default {
     components: {ListTable, AppLayout},
     props: {
         tests: Object,
+        title: {type: String, default: 'All Tests'},
     },
 
     setup(props) {

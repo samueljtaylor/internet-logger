@@ -11,7 +11,7 @@
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
                                 <inertia-link :href="route('dashboard')">
-                                    <jet-application-mark class="block h-9 w-auto" />
+                                    <taylor-network-logo class="block h-9 w-auto" />
                                 </inertia-link>
                             </div>
 
@@ -21,7 +21,10 @@
                                     Dashboard
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('connection-test.index')" :active="route().current('connection-test.index')">
-                                    Connection Tests
+                                    All Tests
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('connection-test.index', {filter: 'failed'})">
+                                    All Failed Tests
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -146,6 +149,14 @@
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </jet-responsive-nav-link>
+
+                        <jet-responsive-nav-link :href="route('connection-test.index')" :active="route().current('connection=test.index')">
+                            All Tests
+                        </jet-responsive-nav-link>
+
+                        <jet-responsive-nav-link :href="route('connection-test.index', {filter: 'failed'})">
+                            All Failed Tests
+                        </jet-responsive-nav-link>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -239,9 +250,11 @@
     import JetDropdownLink from '@/Jetstream/DropdownLink'
     import JetNavLink from '@/Jetstream/NavLink'
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+    import TaylorNetworkLogo from "@/Components/TaylorNetworkLogo";
 
     export default {
         components: {
+            TaylorNetworkLogo,
             JetApplicationMark,
             JetBanner,
             JetDropdown,
