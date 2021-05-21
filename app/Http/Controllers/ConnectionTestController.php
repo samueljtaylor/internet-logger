@@ -19,7 +19,7 @@ class ConnectionTestController extends Controller
             foreach($filters as $filter) {
                 try {
                     $query->$filter();
-                } catch(\Exception) {
+                } catch(\Exception $e) {
                     //
                 }
             }
