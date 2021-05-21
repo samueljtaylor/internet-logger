@@ -3,11 +3,10 @@
         <div class="p-5 text-center text-gray-400" v-if="!items.length">
             No Items
         </div>
-        <table class="table w-full border-collapse" v-if="items.length">
+        <table class="table w-full border-collapse hidden md:flex" v-if="items.length">
             <tr>
                 <th>ID</th>
                 <th>Date</th>
-                <th>Time</th>
                 <th>Status</th>
                 <th>Details</th>
             </tr>
@@ -24,6 +23,19 @@
                 </td>
             </tr>
         </table>
+
+        <div class="flex flex-col md:hidden w-full p-5 space-y-5" v-if="items.length">
+            <div class="flex flex-col space-y-2 items-center pb-5 border-b border-gray-500" v-for="item in items">
+                <div class="text-lg">
+                    {{ $helpers.formatDate(item.created_at) }} at {{ $helpers.formatTime(item.created_at) }}
+                </div>
+                <div class="bg-red-500 text-white tracking-wider text-center rounded-lg w-1/2 px-3" v-if="!item.up">Fail</div>
+                <div class="bg-green-500 text-white tracking-wider text-center rounded-lg w-1/2 px-3" v-if="item.up">Success</div>
+                <div>
+                    <button type="button" class="button" @click="openModal(item)">Details</button>
+                </div>
+            </div>
+        </div>
 
         <div class="flex flex-row w-full justify-center px-5" v-if="paginationLinks.length && items.length">
             <inertia-link class="p-4" v-for="link in paginationLinks" :href="link.url || '#'" :active="link.active" v-html="link.label"></inertia-link>

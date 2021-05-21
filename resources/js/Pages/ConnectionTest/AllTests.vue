@@ -7,7 +7,7 @@
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col">
                 <list-table :items="tests.data" :pagination-links="tests.links"/>
             </div>
         </div>
