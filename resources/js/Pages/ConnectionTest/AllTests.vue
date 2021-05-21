@@ -8,7 +8,7 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col">
-                <list-table :items="tests.data" :pagination-links="tests.links"/>
+                <list-table :items="tests"/>
             </div>
         </div>
     </app-layout>

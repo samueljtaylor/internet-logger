@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="text-2xl mt-20 mb-5">Today's Failed Tests</div>
-                <list-table :items="failedTests.data" :pagination-links="failedTests.links"/>
+                <list-table :items="failedTests"/>
             </div>
         </div>
     </app-layout>

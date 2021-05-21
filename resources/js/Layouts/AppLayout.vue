@@ -236,7 +236,7 @@
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="pb-40">
                 <slot></slot>
             </main>
         </div>
