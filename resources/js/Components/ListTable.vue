@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="flex flex-row w-full justify-center px-5" v-if="paginationLinks.length && items.length">
+        <div class="flex flex-row w-full justify-center px-5 max-w-full" v-if="paginationLinks.length && items.length">
             <inertia-link class="p-4" v-for="link in paginationLinks" :href="link.url || '#'" :active="link.active" v-html="link.label"></inertia-link>
         </div>
 
