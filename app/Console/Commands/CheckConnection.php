@@ -42,7 +42,8 @@ class CheckConnection extends Command
     {
         $connection = ConnectionTest::create();
 
-        exec('ping -c 1 8.8.8.8', $output, $code);
+//        exec('ping -c 1 8.8.8.8', $output, $code);
+        exec('mtr -rc 1 taylornetwork.ca', $output, $code);
 
         $connection->update([
             'output' => implode(PHP_EOL, $output),
