@@ -42,8 +42,17 @@ class CheckConnection extends Command
     {
         $connection = ConnectionTest::create();
 
-//        exec('ping -c 1 8.8.8.8', $output, $code);
-        exec('mtr -rc 1 taylornetwork.ca', $output, $code);
+        exec('ping -c 1 ' . config('connection.host'), $output, $code);
+
+        if($code !== 0) {
+            $output[] = '';
+            try {
+                exec('traceroute ' . config('connection.host'), $trace_output);
+                $output = array_merge($output, $trace_output);
+            } catch (\Exception $e) {
+                $output[] = 'Could not run traceroute.';
+            }
+        }
 
         $connection->update([
             'output' => implode(PHP_EOL, $output),
