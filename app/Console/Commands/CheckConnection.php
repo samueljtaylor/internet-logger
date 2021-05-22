@@ -46,6 +46,7 @@ class CheckConnection extends Command
 
         if($code !== 0) {
             $output[] = '';
+            $output[] = 'Begin traceroute...';
             try {
                 exec('traceroute ' . config('connection.host'), $trace_output);
                 $output = array_merge($output, $trace_output);
